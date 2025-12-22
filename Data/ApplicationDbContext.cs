@@ -13,5 +13,23 @@ namespace LibraryManagementSystem.Data
             : base(options)
         {
         }
-    }
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+			// LookThisAgain
+			// Απενεργοποίηση του Cascade Delete για τα ReviewVotes 
+			// ώστε να μην έχουμε πολλαπλά μονοπάτια διαγραφής
+			modelBuilder.Entity<ReviewVote>()
+				.HasOne(rv => rv.Review)
+				.WithMany(r => r.Votes)
+				.HasForeignKey(rv => rv.ReviewId)
+				.OnDelete(DeleteBehavior.Restrict); // Αλλάζουμε το Cascade σε Restrict
+
+			modelBuilder.Entity<ReviewVote>()
+				.HasOne(rv => rv.User)
+				.WithMany()
+				.HasForeignKey(rv => rv.UserId)
+				.OnDelete(DeleteBehavior.Restrict);
+		}
+	}
 }
