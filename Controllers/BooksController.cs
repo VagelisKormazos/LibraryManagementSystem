@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementSystem.Data;
 using LibraryManagementSystem.Models;
+using LibraryManagementSystem.ViewModels;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -19,23 +20,47 @@ namespace LibraryManagementSystem.Controllers
             _context = context;
         }
 
-        // GET: Books
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Books.ToListAsync());
-        }
+		// GET: Books
+		public async Task<IActionResult> Index(string genreFilter, int? yearFilter)
+		{
+			
+			var booksQuery = _context.Books.AsQueryable();
 
-        // GET: Books/Details/5
-        public async Task<IActionResult> Details(int? id)
+			if (!string.IsNullOrEmpty(genreFilter))
+			{
+				booksQuery = booksQuery.Where(b => b.Genre == genreFilter);
+			}
+
+			if (yearFilter.HasValue)
+			{
+				booksQuery = booksQuery.Where(b => b.PublishedYear == yearFilter);
+			}
+
+			var viewModel = new BookIndexViewModel
+			{
+				Books = await booksQuery.ToListAsync(),
+				GenreFilter = genreFilter,
+				YearFilter = yearFilter,
+				Genres = await _context.Books.Select(b => b.Genre).Distinct().ToListAsync()
+			};
+
+			return View(viewModel);
+		}
+
+		// GET: Books/Details/5
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Books
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+			var book = await _context.Books
+		        .Include(b => b.Reviews)
+		        .ThenInclude(r => r.User) 
+		        .FirstOrDefaultAsync(m => m.Id == id);
+
+			if (book == null)
             {
                 return NotFound();
             }
@@ -153,5 +178,8 @@ namespace LibraryManagementSystem.Controllers
         {
             return _context.Books.Any(e => e.Id == id);
         }
+
+       
+
     }
 }
