@@ -20,5 +20,6 @@ namespace LibraryManagementSystem.Models
 		public virtual IdentityUser? User { get; set; }
 
 		public virtual ICollection<ReviewVote> Votes { get; set; } = new List<ReviewVote>();
+		public virtual ICollection<ReviewVote> ReviewVotes { get; set; } = new List<ReviewVote>();
 	}
 }

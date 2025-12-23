@@ -30,7 +30,28 @@
             <div class="card-body">
                 <h6 class="card-subtitle mb-2 text-muted">Rating: @review.Rating / 5</h6>
                 <p class="card-text">@review.Content</p>
-                <footer class="blockquote-footer">By @(review.User?.UserName ?? "Anonymous") on @review.DateCreated.ToShortDateString()</footer>
+
+                <div class="d-flex align-items-center gap-3">
+                    <form asp-action="Vote" method="post" class="d-inline">
+                        <input type="hidden" name="reviewId" value="@review.Id" />
+                        <input type="hidden" name="isUpvote" value="true" />
+                        <button type="submit" class="btn btn-sm btn-outline-success">
+                            👍 @(review.ReviewVotes?.Count(v => v.IsUpvote) ?? 0)
+                        </button>
+                    </form>
+
+                    <form asp-action="Vote" method="post" class="d-inline">
+                        <input type="hidden" name="reviewId" value="@review.Id" />
+                        <input type="hidden" name="isUpvote" value="false" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                            👎 @(review.ReviewVotes?.Count(v => !v.IsUpvote) ?? 0)
+                        </button>
+                    </form>
+                </div>
+
+                <footer class="blockquote-footer mt-2">
+                    By @(review.User?.UserName ?? "Anonymous") on @review.DateCreated.ToShortDateString()
+                </footer>
             </div>
         </div>
     }
