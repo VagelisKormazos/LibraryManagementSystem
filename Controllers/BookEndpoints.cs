@@ -58,5 +58,16 @@ public static class BookEndpoints
             return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
         })
         .WithName("DeleteBook");
+
+		 
+		group.MapGet("/{id}/reviews", async (int id, ApplicationDbContext db) =>
+		{
+			return await db.Reviews
+				.Where(r => r.BookId == id)
+				.Select(r => new { r.Id, r.Content, r.Rating, r.User.UserName })
+				.ToListAsync();
+		})
+        .WithName("GetBookReviews")
+        .WithOpenApi();
     }
 }
