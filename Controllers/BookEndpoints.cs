@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using LibraryManagementSystem.Data;
+﻿using LibraryManagementSystem.Data;
 using LibraryManagementSystem.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.OpenApi;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 namespace LibraryManagementSystem.Controllers;
 
 public static class BookEndpoints
@@ -69,5 +70,51 @@ public static class BookEndpoints
 		})
         .WithName("GetBookReviews")
         .WithOpenApi();
-    }
+
+		var reviewGroup = routes.MapGroup("/api/reviews").WithTags("Reviews");
+
+		reviewGroup.MapPost("/", async (Review review, ClaimsPrincipal user, ApplicationDbContext db) =>
+		{
+			var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (userId == null) return Results.Challenge();
+
+			review.UserId = userId;
+			review.DateCreated = DateTime.Now;
+
+			db.Reviews.Add(review);
+			await db.SaveChangesAsync();
+			return TypedResults.Created($"/api/reviews/{review.Id}", review);
+		})
+		.WithName("CreateReviewApi")
+		.RequireAuthorization();
+
+		reviewGroup.MapPost("/{id}/vote", async (int id, bool isUpvote, ClaimsPrincipal user, ApplicationDbContext db) =>
+		{
+			var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+			if (userId == null) return Results.Challenge();
+
+
+			var existingVote = await db.ReviewVotes
+				.FirstOrDefaultAsync(v => v.ReviewId == id && v.UserId == userId);
+
+			if (existingVote != null)
+			{
+				existingVote.IsUpvote = isUpvote;
+			}
+			else
+			{
+				db.ReviewVotes.Add(new ReviewVote
+				{
+					ReviewId = id,
+					UserId = userId,
+					IsUpvote = isUpvote
+				});
+			}
+
+			await db.SaveChangesAsync();
+			return TypedResults.Ok();
+		})
+		.WithName("VoteReviewApi")
+		.RequireAuthorization();
+	}
 }
