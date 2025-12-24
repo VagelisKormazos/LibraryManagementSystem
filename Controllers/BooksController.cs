@@ -25,7 +25,7 @@ namespace LibraryManagementSystem.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index(string genreFilter, int? yearFilter)
+        public async Task<IActionResult> Index(string genreFilter, int? yearFilter, int? ratingFilter)
         {
 
             var booksQuery = _context.Books.AsQueryable();
@@ -40,15 +40,22 @@ namespace LibraryManagementSystem.Controllers
                 booksQuery = booksQuery.Where(b => b.PublishedYear == yearFilter);
             }
 
-            var viewModel = new BookIndexViewModel
-            {
-                Books = await booksQuery.ToListAsync(),
-                GenreFilter = genreFilter,
-                YearFilter = yearFilter,
-                Genres = await _context.Books.Select(b => b.Genre).Distinct().ToListAsync()
-            };
+			if (ratingFilter.HasValue)
+			{
+				// Φιλτράρουμε βιβλία που έχουν μέση βαθμολογία >= από την επιλογή του χρήστη
+				booksQuery = booksQuery.Where(b => b.Reviews.Any() && b.Reviews.Average(r => r.Rating) >= ratingFilter);
+			}
 
-            return View(viewModel);
+			var viewModel = new BookIndexViewModel
+			{
+				Books = await booksQuery.ToListAsync(),
+				GenreFilter = genreFilter,
+				YearFilter = yearFilter,
+				RatingFilter = ratingFilter, // Προσθήκη
+				Genres = await _context.Books.Select(b => b.Genre).Distinct().ToListAsync()
+			};
+
+			return View(viewModel);
         }
 
         // GET: Books/Details/5

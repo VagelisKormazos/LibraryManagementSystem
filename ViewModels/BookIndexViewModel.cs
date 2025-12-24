@@ -11,5 +11,7 @@
 
 		// Λίστα για το dropdown των ειδών (προαιρετικά)
 		public List<string>? Genres { get; set; }
+
+		public int? RatingFilter { get; set; }
 	}
 }
