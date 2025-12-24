@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LibraryManagementSystem.Data.Migrations
+namespace LibraryManagementSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -98,9 +98,6 @@ namespace LibraryManagementSystem.Data.Migrations
                     b.Property<int>("ReviewId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReviewId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -108,8 +105,6 @@ namespace LibraryManagementSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ReviewId");
-
-                    b.HasIndex("ReviewId1");
 
                     b.HasIndex("UserId");
 
@@ -340,14 +335,10 @@ namespace LibraryManagementSystem.Data.Migrations
             modelBuilder.Entity("LibraryManagementSystem.Models.ReviewVote", b =>
                 {
                     b.HasOne("LibraryManagementSystem.Models.Review", "Review")
-                        .WithMany("Votes")
+                        .WithMany("ReviewVotes")
                         .HasForeignKey("ReviewId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("LibraryManagementSystem.Models.Review", null)
-                        .WithMany("ReviewVotes")
-                        .HasForeignKey("ReviewId1");
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
@@ -419,8 +410,6 @@ namespace LibraryManagementSystem.Data.Migrations
             modelBuilder.Entity("LibraryManagementSystem.Models.Review", b =>
                 {
                     b.Navigation("ReviewVotes");
-
-                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

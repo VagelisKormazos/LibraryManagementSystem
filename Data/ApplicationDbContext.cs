@@ -21,7 +21,7 @@ namespace LibraryManagementSystem.Data
 			// ώστε να μην έχουμε πολλαπλά μονοπάτια διαγραφής
 			modelBuilder.Entity<ReviewVote>()
 				.HasOne(rv => rv.Review)
-				.WithMany(r => r.Votes)
+				.WithMany(r => r.ReviewVotes)
 				.HasForeignKey(rv => rv.ReviewId)
 				.OnDelete(DeleteBehavior.Restrict); // Αλλάζουμε το Cascade σε Restrict
 

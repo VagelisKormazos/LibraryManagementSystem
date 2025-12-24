@@ -8,7 +8,7 @@ namespace LibraryManagementSystem.ViewModels
 		public string? BookTitle { get; set; }
 
 		[Required(ErrorMessage = "Content is required")]
-		[StringLength(500, MinimumLength = 10, ErrorMessage = "Content must be between 10 and 500 characters")]
+		[StringLength(500, MinimumLength = 1, ErrorMessage = "Content must be between 10 and 500 characters")]
 		public string Content { get; set; }
 
 		[Required]
