@@ -1,0 +1,51 @@
+1. 1984
+JSON
+
+{
+  "title": "1984",
+  "author": "George Orwell",
+  "publishedYear": 1949,
+  "genre": "Dystopian"
+}
+2. The Lord of the Rings
+JSON
+
+{
+  "title": "The Lord of the Rings",
+  "author": "J.R.R. Tolkien",
+  "publishedYear": 1954,
+  "genre": "Fantasy"
+}
+3. Clean Code
+JSON
+
+{
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "publishedYear": 2008,
+  "genre": "Software Engineering"
+}
+4. Crime and Punishment
+JSON
+
+{
+  "title": "Crime and Punishment",
+  "author": "Fyodor Dostoevsky",
+  "publishedYear": 1866,
+  "genre": "Classic"
+}
+
+
+{
+  "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+  "author": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
+  "publishedYear": 1994,
+  "genre": "Software Engineering"
+}
+
+Reviews
+{
+  "bookId": 6, 
+  "content": "An essential classic for any software architect. The foundational guide to design patterns.",
+  "rating": 5
+}
