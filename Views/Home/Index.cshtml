@@ -2,7 +2,43 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center my-5">
+    <h1 class="display-4 fw-bold text-primary">Library Management System</h1>
+    <p class="lead">A modern, full-stack solution for book enthusiasts and library administrators.</p>
+</div>
+
+<div class="container">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title h5 text-secondary">📚 Core Features</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Book Management:</strong> Full CRUD operations for digital library organization.</li>
+                        <li class="list-group-item"><strong>Advanced Filtering:</strong> Smart search by Genre, Publication Year, and Average Rating.</li>
+                        <li class="list-group-item"><strong>User Engagement:</strong> Review system with an integrated Voting (Like/Dislike) mechanism.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title h5 text-secondary">⚙️ Technical Stack</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Backend:</strong> Built with .NET 9 and Entity Framework Core (Code-First).</li>
+                        <li class="list-group-item"><strong>REST API:</strong> Complete Minimal API implementation with JSON endpoints.</li>
+                        <li class="list-group-item"><strong>Documentation:</strong> Interactive API documentation via Swagger.</li>
+                        <li class="list-group-item"><strong>Security:</strong> Secure authentication and authorization using ASP.NET Core Identity.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 p-4 bg-light rounded shadow-sm text-center">
+        <h5>Ready to explore?</h5>
+        <p>Go to the <strong><a asp-controller="Books" asp-action="Index">Books List</a></strong> to manage the collection or check the <strong><a href="/swagger">API Docs</a></strong>.</p>
+    </div>
 </div>
