@@ -8,13 +8,23 @@
 
 <form asp-action="Index" method="get" class="mb-4">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input type="text" name="genreFilter" value="@Model.GenreFilter" class="form-control" placeholder="Filter by Genre..." />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <input type="number" name="yearFilter" value="@Model.YearFilter" class="form-control" placeholder="Filter by Year..." />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
+            <select name="ratingFilter" class="form-control">
+                <option value="">Filter by Rating...</option>
+                <option value="5" selected="@(Model.RatingFilter == 5)">5 Stars</option>
+                <option value="4" selected="@(Model.RatingFilter == 4)">4+ Stars</option>
+                <option value="3" selected="@(Model.RatingFilter == 3)">3+ Stars</option>
+                <option value="2" selected="@(Model.RatingFilter == 2)">2+ Stars</option>
+                <option value="1" selected="@(Model.RatingFilter == 1)">1+ Star</option>
+            </select>
+        </div>
+        <div class="col-md-3">
             <button type="submit" class="btn btn-primary">Filter</button>
             <a asp-action="Index" class="btn btn-secondary">Reset</a>
         </div>
@@ -28,6 +38,7 @@
             <th>Author</th>
             <th>Year</th>
             <th>Genre</th>
+            <th>Rating</th>
             <th></th>
         </tr>
     </thead>
@@ -39,6 +50,16 @@
                 <td>@item.Author</td>
                 <td>@item.PublishedYear</td>
                 <td>@item.Genre</td>
+                <td>
+                    @if (item.Reviews != null && item.Reviews.Any())
+                    {
+                        <span class="text-warning">⭐ @item.Reviews.Average(r => r.Rating).ToString("0.0")</span>
+                    }
+                    else
+                    {
+                        <span class="text-muted">No ratings</span>
+                    }
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

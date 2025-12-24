@@ -28,9 +28,9 @@ namespace LibraryManagementSystem.Controllers
         public async Task<IActionResult> Index(string genreFilter, int? yearFilter, int? ratingFilter)
         {
 
-            var booksQuery = _context.Books.AsQueryable();
+            var booksQuery = _context.Books.Include(b => b.Reviews).AsQueryable();
 
-            if (!string.IsNullOrEmpty(genreFilter))
+			if (!string.IsNullOrEmpty(genreFilter))
             {
                 booksQuery = booksQuery.Where(b => b.Genre == genreFilter);
             }
