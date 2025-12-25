@@ -73,3 +73,49 @@ A modern, full-stack Web Application for managing a digital library, built with 
 To run the unit tests and verify the business logic:
 ```bash
 dotnet test
+```
+---
+
+## 🖼️ Visual Walkthrough & Technical Proof
+
+### 1. User Authentication & Security
+The system uses **ASP.NET Core Identity** to manage user accounts and secure sensitive operations like posting reviews and voting.
+
+| Registration Page | User Session |
+|---|---|
+| ![Register](docs/screenshots/register.jpg) | ![Authenticated Session](docs/screenshots/Review.jpg) |
+*Citations:*
+
+### 2. Book Management & Advanced Filtering
+The main dashboard provides a clean interface for managing the library with real-time filtering capabilities.
+
+![Books List and Ratings](docs/screenshots/BookList.jpg)
+> **Featured**: Filtering by **Genre**, **Year**, and **Average Rating**.
+
+### 3. Review & Voting System
+Interactive engagement tools allowing users to share feedback and evaluate other users' contributions.
+
+![Review and Voting System](docs/screenshots/Review.jpg)
+*Citations:*
+
+### 4. API Documentation (Swagger)
+Complete REST API implementation with interactive documentation for easy integration.
+
+![Swagger UI](docs/screenshots/Swagger.jpg)
+*Citations:*
+
+### 5. Backend & Data Integrity
+Evidence of a clean **Code-First** implementation and secure database configuration.
+
+| Database Schema | Migration History |
+|---|---|
+| ![SQL Server](docs/screenshots/image_6f13cc.png) | ![Migrations](docs/screenshots/image_6f0fcc.png) |
+*Citations:*
+
+> **Security Note**: Connection strings use **Trusted Connection** for secure local development.
+
+### 6. Quality Assurance (Unit Testing)
+Core business logic (like average rating calculations) is verified using **xUnit** tests.
+
+![Unit Tests Results](docs/screenshots/image_eead3c.png)
+*Citations:*
