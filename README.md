@@ -81,11 +81,8 @@ dotnet test
 ### 1. User Authentication & Security
 The system uses **ASP.NET Core Identity** to manage user accounts and secure sensitive operations like posting reviews and voting.
 
-| Registration Page | User Session |
-|---|---|
-| ![register](https://github.com/user-attachments/assets/d4de4ae8-bbdc-4755-a411-d1709b496c7b)
-| ![Review Filter](https://github.com/user-attachments/assets/5b23404a-06fc-4b4d-b839-abae112d6f86)
-|
+ #### Registration Page 
+ ![register](https://github.com/user-attachments/assets/d4de4ae8-bbdc-4755-a411-d1709b496c7b)
 
 ### 2. Book Management & Advanced Filtering
 The main dashboard provides a clean interface for managing the library with real-time filtering capabilities.
