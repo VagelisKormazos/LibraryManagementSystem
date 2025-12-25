@@ -83,39 +83,29 @@ The system uses **ASP.NET Core Identity** to manage user accounts and secure sen
 
 | Registration Page | User Session |
 |---|---|
-| ![Register](docs/screenshots/register.jpg) | ![Authenticated Session](docs/screenshots/Review.jpg) |
-*Citations:*
+| ![register](https://github.com/user-attachments/assets/d4de4ae8-bbdc-4755-a411-d1709b496c7b)
+| ![Review Filter](https://github.com/user-attachments/assets/5b23404a-06fc-4b4d-b839-abae112d6f86)
+|
 
 ### 2. Book Management & Advanced Filtering
 The main dashboard provides a clean interface for managing the library with real-time filtering capabilities.
 
-![Books List and Ratings](docs/screenshots/BookList.jpg)
+![Review Filter](https://github.com/user-attachments/assets/4927ccf8-c7ef-4e4f-8dbe-0e24c22b1eae)
+
+
 > **Featured**: Filtering by **Genre**, **Year**, and **Average Rating**.
 
 ### 3. Review & Voting System
 Interactive engagement tools allowing users to share feedback and evaluate other users' contributions.
+![Review](https://github.com/user-attachments/assets/ba6d1e01-a508-4fef-aaa0-5337fffe6705)
 
-![Review and Voting System](docs/screenshots/Review.jpg)
-*Citations:*
 
 ### 4. API Documentation (Swagger)
 Complete REST API implementation with interactive documentation for easy integration.
+![Swagger](https://github.com/user-attachments/assets/1ec0df8c-af10-45e0-94e9-a45e05506ba8)
 
-![Swagger UI](docs/screenshots/Swagger.jpg)
-*Citations:*
 
-### 5. Backend & Data Integrity
-Evidence of a clean **Code-First** implementation and secure database configuration.
-
-| Database Schema | Migration History |
-|---|---|
-| ![SQL Server](docs/screenshots/image_6f13cc.png) | ![Migrations](docs/screenshots/image_6f0fcc.png) |
-*Citations:*
-
-> **Security Note**: Connection strings use **Trusted Connection** for secure local development.
-
-### 6. Quality Assurance (Unit Testing)
+### 5. Quality Assurance (Unit Testing)
 Core business logic (like average rating calculations) is verified using **xUnit** tests.
+<img width="790" height="400" alt="Uni Test" src="https://github.com/user-attachments/assets/c7c74797-c179-4fd1-8d1c-4087231ef04a" />
 
-![Unit Tests Results](docs/screenshots/image_eead3c.png)
-*Citations:*
