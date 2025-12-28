@@ -16,14 +16,11 @@ namespace LibraryManagementSystem.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
-			// LookThisAgain
-			// Απενεργοποίηση του Cascade Delete για τα ReviewVotes 
-			// ώστε να μην έχουμε πολλαπλά μονοπάτια διαγραφής
 			modelBuilder.Entity<ReviewVote>()
 				.HasOne(rv => rv.Review)
 				.WithMany(r => r.ReviewVotes)
 				.HasForeignKey(rv => rv.ReviewId)
-				.OnDelete(DeleteBehavior.Restrict); // Αλλάζουμε το Cascade σε Restrict
+				.OnDelete(DeleteBehavior.Restrict); 
 
 			modelBuilder.Entity<ReviewVote>()
 				.HasOne(rv => rv.User)

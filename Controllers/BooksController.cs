@@ -42,7 +42,6 @@ namespace LibraryManagementSystem.Controllers
 
 			if (ratingFilter.HasValue)
 			{
-				// Φιλτράρουμε βιβλία που έχουν μέση βαθμολογία >= από την επιλογή του χρήστη
 				booksQuery = booksQuery.Where(b => b.Reviews.Any() && b.Reviews.Average(r => r.Rating) >= ratingFilter);
 			}
 
@@ -51,7 +50,7 @@ namespace LibraryManagementSystem.Controllers
 				Books = await booksQuery.ToListAsync(),
 				GenreFilter = genreFilter,
 				YearFilter = yearFilter,
-				RatingFilter = ratingFilter, // Προσθήκη
+				RatingFilter = ratingFilter, 
 				Genres = await _context.Books.Select(b => b.Genre).Distinct().ToListAsync()
 			};
 
@@ -70,7 +69,7 @@ namespace LibraryManagementSystem.Controllers
                 .Include(b => b.Reviews)
                     .ThenInclude(r => r.User)
                 .Include(b => b.Reviews)
-                    .ThenInclude(r => r.ReviewVotes) // Φορτώνουμε τις ψήφους για κάθε κριτική
+                    .ThenInclude(r => r.ReviewVotes) 
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (book == null)
@@ -88,8 +87,6 @@ namespace LibraryManagementSystem.Controllers
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Author,PublishedYear,Genre")] Book book)
@@ -120,8 +117,6 @@ namespace LibraryManagementSystem.Controllers
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Author,PublishedYear,Genre")] Book book)
@@ -199,14 +194,11 @@ namespace LibraryManagementSystem.Controllers
             var userId = _userManager.GetUserId(User);
             if (userId == null) return Challenge();
 
-            // Έλεγχος αν ο χρήστης έχει ήδη ψηφίσει αυτή την κριτική
             var existingVote = await _context.ReviewVotes
                 .FirstOrDefaultAsync(v => v.ReviewId == reviewId && v.UserId == userId);
 
             if (existingVote != null)
             {
-                // Αν πατήσει το ίδιο, μπορούμε να το αφαιρέσουμε ή απλά να το αφήσουμε. 
-                // Εδώ το ενημερώνουμε με τη νέα τιμή.
                 existingVote.IsUpvote = isUpvote;
             }
             else
@@ -222,7 +214,6 @@ namespace LibraryManagementSystem.Controllers
 
             await _context.SaveChangesAsync();
 
-            // Εύρεση του BookId για την επιστροφή στη σωστή σελίδα
             var review = await _context.Reviews.FindAsync(reviewId);
             return RedirectToAction(nameof(Details), new { id = review.BookId });
         }
@@ -234,11 +225,9 @@ namespace LibraryManagementSystem.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				// Παίρνουμε τον τρέχοντα συνδεδεμένο χρήστη
 				var user = await _userManager.GetUserAsync(User);
 				if (user == null) return Challenge();
 
-				// Δημιουργία της κριτικής από το ViewModel
 				var review = new Review
 				{
 					BookId = model.BookId,
@@ -251,17 +240,11 @@ namespace LibraryManagementSystem.Controllers
 				_context.Reviews.Add(review);
 				await _context.SaveChangesAsync();
 
-				// Επιστροφή στη σελίδα των λεπτομερειών του βιβλίου
 				return RedirectToAction(nameof(Details), new { id = model.BookId });
 			}
 
-			// Αν το μοντέλο δεν είναι έγκυρο, επιστρέφουμε στις λεπτομέρειες
 			return RedirectToAction(nameof(Details), new { id = model.BookId });
 		}
-
-
-
-
 
 	}
 }
